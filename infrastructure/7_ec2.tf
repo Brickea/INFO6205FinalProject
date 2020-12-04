@@ -1,6 +1,6 @@
 resource "aws_instance" "AVS-ec2-instance" {
 
-    ami = "ami-0885b1f6bd170450c" # 使用之前我们选的 ubuntu 20 ami id
+    ami = "ami-00546eea158566779" # 使用之前我们选的 ubuntu 20 ami id
 
     instance_type = "t2.micro" # 使用我们之前选的 instance type
 
