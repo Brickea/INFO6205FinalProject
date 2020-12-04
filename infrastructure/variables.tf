@@ -2,6 +2,10 @@ variable "project_name" {
   default = "AVS-"
 }
 
+variable "project_ami" {
+  default = "ami-0944de862c185c5ee"
+}
+
 variable "subdomain_zone_id" {
   default = "Z06040141HS23QE67878Q"
 }
