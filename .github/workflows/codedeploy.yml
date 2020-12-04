@@ -1,0 +1,157 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Build & Deploy WebApp
+
+
+env:
+  ARTIFACT_NAME: avs-${{ github.sha }}.zip
+  CODEDEPLOY_APPLICATION_NAME: avs
+  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME: avs-deployment
+  AWS_REGION: us-east-1
+
+on: 
+  pull_request:
+    branches:
+      codedeploy
+
+jobs:
+  ci_cd:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+    
+    - name: Build with Maven
+      run: |
+        java -version
+        echo "${{env.ARTIFACT_NAME}}"
+        pwd
+        ls
+        sudo mvn -B clean install --file webapp/pom.xml
+        sudo mvn -e -B package --file webapp/pom.xml
+        pwd
+        ls -al webapp/target
+        cd webapp/target
+        pwd
+        ls -al
+    - name: Build Deployment Artifact
+      run: |
+        mkdir codedeploy_artifact
+        zip -r ${{ env.ARTIFACT_NAME }} avsapp/target/avs-0.0.1-SNAPSHOT.jar avsapp/codedeploy/*.sh avsapp/appspec.yml
+        ls -al
+        mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact/
+        ls -al
+        cd codedeploy_artifact
+        ls -al
+    # - name: Configure AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWSACCESSKEYID_DEV }}
+    #     aws-secret-access-key: ${{secrets.AWSSECRETKEY_DEV }}
+    #     aws-region: ${{ env.AWS_REGION }}
+
+    # - name: Copy Artifact to S3
+    #   run: |
+    #     aws s3 sync ./codedeploy_artifact s3://${{ secrets.S3_CODEDEPLOY_BUCKET_DEV }}
+
+    # - name: CodeDeploy API call
+    #   run: |
+    #     output=$(aws deploy create-deployment \
+    #     --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
+    #     --deployment-config-name CodeDeployDefault.OneAtATime \
+    #     --deployment-group-name ${{ env.CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME }} \
+    #     --s3-location bucket=secrets.S3CODEDEPLOYBUCKETDEV,bundleType=zip,key={{ env.ARTIFACT_NAME }} \
+    #     --region ${{ env.AWS_REGION }} \
+    #     --output json)
+
+    #     echo $output
+
+    #     dId=(echooutput | jq -r '.deploymentId')
+
+    #     aws deploy wait deployment-successful --deployment-id $dId
+
+
+    # - name: Configure AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWSACCESSKEYID_PROD }}
+    #     aws-secret-access-key: ${{secrets.AWSSECRETKEY_PROB }}
+    #     aws-region: ${{ env.AWS_REGION }}
+
+    # - name: Copy Artifact to S3
+    #   run: |
+    #     aws s3 sync ./codedeploy_artifact s3://${{ secrets.S3_CODEDEPLOY_BUCKET_PROD }}
+
+    # - name: CodeDeploy API call
+    #   run: |
+    #     output=$(aws deploy create-deployment \
+    #     --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
+    #     --deployment-config-name CodeDeployDefault.OneAtATime \
+    #     --deployment-group-name ${{ env.CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME }} \
+    #     --s3-location bucket=secrets.S3CODEDEPLOYBUCKETPROD,bundleType=zip,key={{ env.ARTIFACT_NAME }} \
+    #     --region ${{ env.AWS_REGION }} \
+    #     --output json)
+
+    #     echo $output
+
+    #     dId=(echooutput | jq -r '.deploymentId')
+
+    #     aws deploy wait deployment-successful --deployment-id $dId
+
+    # - name: Configure AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.GITHUBACTIONKEYID }}
+    #     aws-secret-access-key: ${{secrets.GITHUBACTIONKEY }}
+    #     aws-region: ${{ env.AWS_REGION }}
+
+    # - name: Copy Artifact to S3
+    #   run: |
+    #     aws s3 sync ./codedeploy_artifact s3://${{ secrets.S3_CODEDEPLOY_BUCKET_DEV }}
+
+    # - name: CodeDeploy API call
+    #   run: |
+    #     output=$(aws deploy create-deployment \
+    #     --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
+    #     --deployment-config-name CodeDeployDefault.OneAtATime \
+    #     --deployment-group-name ${{ env.CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME }} \
+    #     --s3-location bucket=secrets.S3CODEDEPLOYBUCKETDEV,bundleType=zip,key={{ env.ARTIFACT_NAME }} \
+    #     --region ${{ env.AWS_REGION }} \
+    #     --output json)
+
+    #     echo $output
+
+    #     dId=(echooutput | jq -r '.deploymentId')
+ 
+    #     aws deploy wait deployment-successful --deployment-id $dId
+
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.GITHUBACTIONKEYID_PROD }}
+        aws-secret-access-key: ${{secrets.GITHUBACTIONKEY_PROD }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Copy Artifact to S3
+      run: |
+        aws s3 sync ./codedeploy_artifact s3://${{ secrets.S3_CODEDEPLOY_BUCKET_PROD }}
+    - name: CodeDeploy API call
+      run: |
+        output=$(aws deploy create-deployment \
+        --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
+        --deployment-config-name CodeDeployDefault.OneAtATime \
+        --deployment-group-name ${{ env.CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME }} \
+        --s3-location bucket=secrets.S3CODEDEPLOYBUCKETPROD,bundleType=zip,key={{ env.ARTIFACT_NAME }} \
+        --region ${{ env.AWS_REGION }} \
+        --output json)
+        echo $output
+        dId=(echooutput | jq -r '.deploymentId')
+        aws deploy wait deployment-successful --deployment-id $dId
