@@ -22,6 +22,7 @@ sudo service codedeploy-agent start
 sudo service codedeploy-agent status
 echo "*********************install CodeDeploy finish*********************"
 
+
 # isntall CloudWatch
 # echo "*********************installing CloudWatch*********************"
 # sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
