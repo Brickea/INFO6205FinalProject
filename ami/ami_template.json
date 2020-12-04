@@ -36,7 +36,7 @@
         {
             "type": "shell",
             "scripts": [
-                "shell-script/base.sh"
+                "ami/shell-script/base.sh"
             ],
             "pause_before": "4s"
         }
