@@ -1,6 +1,6 @@
 resource "aws_instance" "AVS-ec2-instance" {
 
-    ami = "ami-00546eea158566779" # 使用之前我们选的 ubuntu 20 ami id
+    ami = var.project_ami # 使用之前我们选的 ubuntu 20 ami id
 
     instance_type = "t2.micro" # 使用我们之前选的 instance type
 
@@ -13,7 +13,7 @@ resource "aws_instance" "AVS-ec2-instance" {
     associate_public_ip_address = true
 
     tags = {
-        Name = "AVS-ec2-instance"
+        Name = "avs"
     }
 }
 
