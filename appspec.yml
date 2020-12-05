@@ -2,8 +2,8 @@ version: 0.0
 os: linux
 
 files:
-  - source: ./webapp/target/webapp-0.0.1-SNAPSHOT.jar
-    destination: /home/ubuntu/webapp
+  - source: ./avs/target/webapp-0.0.1-SNAPSHOT.jar
+    destination: /home/ubuntu/avs
 
 hooks:
   BeforeInstall:
