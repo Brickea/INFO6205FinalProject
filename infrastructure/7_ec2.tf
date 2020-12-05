@@ -1,19 +1,21 @@
-resource "aws_instance" "AVS-ec2-instance" {
+resource "aws_instance" "AVS_ec2_instance" {
 
-    ami = "ami-00546eea158566779" # 使用之前我们选的 ubuntu 20 ami id
+    ami = var.project_ami # 使用之前我们选的 ubuntu 20 ami id
 
     instance_type = "t2.micro" # 使用我们之前选的 instance type
 
-    vpc_security_group_ids = [aws_security_group.AVS-sg.id] # 使用我们创建的 安全组 注意这里 "aws_security_group." 后面接的名字是之前写的那个
+    vpc_security_group_ids = [aws_security_group.AVS_sg.id] # 使用我们创建的 安全组 注意这里 "aws_security_group." 后面接的名字是之前写的那个
 
     key_name = "awesome_terraform_aws" # 使用我们上一节中创建的 key pair
 
-    subnet_id = aws_subnet.AVS-subnet-alpha.id
+    subnet_id = aws_subnet.AVS_subnet_alpha.id
+
+    iam_instance_profile = aws_iam_instance_profile.s3_access_profile.name
 
     associate_public_ip_address = true
 
     tags = {
-        Name = "AVS-ec2-instance"
+        Name = "avs"
     }
 }
 
