@@ -5,17 +5,16 @@ files:
   - source: ./avs/target/avs-0.0.1-SNAPSHOT.jar
     destination: /home/ubuntu/avs
 
-hooks:
-  BeforeInstall:
-    - location: ./codedeploy/beforeInstall.sh
-      timeout: 180
-      runas: ubuntu
-  AfterInstall:
-    - location: ./codedeploy/afterInstall.sh
-      timeout: 180
-      runas: ubuntu
-  ApplicationStart:
-    - location: ./codedeploy/applicationStart.sh
-      timeout: 180
-      runas: ubuntu
-  
+# hooks:
+#   BeforeInstall:
+#     - location: ./codedeploy/beforeInstall.sh
+#       timeout: 180
+#       runas: ubuntu
+#   AfterInstall:
+#     - location: ./codedeploy/afterInstall.sh
+#       timeout: 180
+#       runas: ubuntu
+#   ApplicationStart:
+#     - location: ./codedeploy/applicationStart.sh
+#       timeout: 180
+#       runas: ubuntu
