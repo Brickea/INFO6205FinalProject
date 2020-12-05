@@ -3,5 +3,5 @@ resource "aws_route53_record" "AVS-subdomain" {
     name    = var.subdomain_name
     type    = "A"
     ttl = 172800	
-    records = [ aws_instance.AVS-ec2-instance.public_ip ]
+    records = [ aws_instance.AVS_ec2_instance.public_ip ]
 }
