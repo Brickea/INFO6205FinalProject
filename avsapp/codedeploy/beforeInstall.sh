@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# echo "******************Remove all previous files******************"
-# if  [ ! -d  "/home/ubuntu/webapp/"  ]; then
-# echo  "No webapp"
-# else
-# sudo rm  -rf  /home/ubuntu/webapp
-# fi
+echo "******************Remove all previous files******************"
+if  [ ! -d  "/home/ubuntu/avsapp/"  ]; then
+echo  "No avsapp"
+else
+sudo rm  -rf  /home/ubuntu/avsapp
+fi
 
 # if  [ ! -f  "/home/ubuntu/application.properties"  ]; then
 # echo  "No application.properties"
