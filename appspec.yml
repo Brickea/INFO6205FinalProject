@@ -2,20 +2,19 @@ version: 0.0
 os: linux
 
 files:
-  - source: ./avs/target/avs-0.0.1-SNAPSHOT.jar
-    destination: /home/ubuntu/avs
+  - source: /avsapp/target/avs-0.0.1-SNAPSHOT.jar
+    destination: /home/ubuntu/avsapp
 
 hooks:
   BeforeInstall:
-    - location: ./codedeploy/beforeInstall.sh
+    - location: ./avsapp/codedeploy/beforeInstall.sh
       timeout: 180
       runas: ubuntu
   AfterInstall:
-    - location: ./codedeploy/afterInstall.sh
+    - location: ./avsapp/codedeploy/afterInstall.sh
       timeout: 180
       runas: ubuntu
   ApplicationStart:
-    - location: ./codedeploy/applicationStart.sh
+    - location: ./avsapp/codedeploy/applicationStart.sh
       timeout: 180
       runas: ubuntu
-  
