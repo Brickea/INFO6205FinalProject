@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "******************Kill thread installed before******************"
+sudo pkill -9 java
+
 echo "******************Remove all previous files******************"
 if  [ ! -d  "/home/ubuntu/avsapp/"  ]; then
 echo  "No avsapp"
