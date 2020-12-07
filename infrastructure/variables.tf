@@ -1,5 +1,5 @@
 variable "project_name" {
-  default = "AVS-"
+  default = "AVS"
 }
 
 variable "project_ami" {
