@@ -9,4 +9,9 @@ public class PageController {
     public String hello(){
         return "hello";
     }
+
+    @GetMapping("/simulator")
+    public String simulator(){
+        return "simulator";
+    }
 }
