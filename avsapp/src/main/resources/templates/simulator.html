@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Responsive meta tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSS -->
+
+
+    <link rel="icon" type="image/x-icon" href="/icons/virus.png"/>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <title>Awesome Virus Simulation</title>
+
+</head>
+<body>
+
+<div id="avs-title" class="container">
+    <div class="row">
+
+        <div class="col-12">
+            <span style="font-size: xx-large">Awesome</span>
+        </div>
+
+        <div class="col-12">
+            Virus Outbreak Simulator
+        </div>
+
+        <div class="col-12 avs-simulator-containor" id="simulator">
+
+            <div id="simulation-graph">
+                <div id="container">
+
+                    <div id="graph-layout">
+                        <div id="graph-control">
+                            <p>click a susceptible node to infect it</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4 col-sm-12 avs-simulator-options">
+                    <div style="align-content: center" class="col-12"><span style="font-size: xx-large">Options</span></div>
+
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body" >
+                            <h5 class="card-title">Social Distance</h5>
+                            <p class="card-text">Social Distance will make people have less chance to get infected</p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="social_distance_switch" >
+                                <label class="form-check-label" for="social_distance_switch"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Wear Mask</h5>
+                            <p class="card-text">Wearing mask will make people have less chance to get infected</p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mask_switch" >
+                                <label class="form-check-label" for="social_distance_switch"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Prevalence of Testing</h5>
+                            <p class="card-text">Prevalence of testing will not only decrease the infection chance but also will decrease the death ratio</p>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="testing_switch" >
+                                <label class="form-check-label" for="social_distance_switch"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-8 col-sm-12 avs-simulator">
+                    <div class="row">
+                        <div style="align-content: center" class="col-12"><span style="font-size: xx-large">{{ model_name}}</span></div>
+
+                        <div class="col-12">
+                            <div id="chart" style="width: 100%;height:400px;"></div>
+                        </div>
+
+                        <div class="col-12">
+                            <button id="reset-button" class="btn btn-warning" v-on:click="resetSimulate">reset</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <footer class="bd-footer p-3 p-md-5 mt-5 bg-light text-center text-sm-start">
+            <div><a href="https://github.com/Brickea/awesome-virus-simulation">Code</a> by <a
+                    href="https://github.com/Brickea">Brickea Zixiao Wang</a>, using <a
+                    href="http://mbostock.github.com/d3/">d3.js</a>, <a href="http://jquery.com/">jQuery</a>, <a
+                    href="http://code.google.com/p/flot/">flot</a>, inspired by <a
+                    href="https://github.com/ccattuto/SIRtoy">this</a></div>
+        </footer>
+
+    </div>
+
+
+</div>
+
+</body>
+
+<!-- Simulation Dependencies-->
+
+
+<!-- Vue -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- jQuery and JS bundle w/ Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+<!-- Poper.js Development version -->
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
+<!-- Echart.js -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.0.0/dist/echarts.min.js"></script>
+
+
+<script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.flot/0.8.3/jquery.flot.min.js"></script>
+<script type="text/javascript" src="/js/d3.min.js"></script>
+<script type="text/javascript" src="/js/d3.geom.min.js"></script>
+<script type="text/javascript" src="/js/d3.layout.min.js"></script>
+
+<!-- My js file -->
+<script src="/js/simulator.js"></script>
+
+<script type="text/javascript" src="/js/sirtoy.js"></script>
+
+
+<!-- PortalVue  -->
+<script src="http://unpkg.com/vue/dist/vue.js"></script>
+<script src="http://unpkg.com/portal-vue"></script>
+
+</html>
