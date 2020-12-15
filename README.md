@@ -15,6 +15,20 @@
 
 **Please use computer to visit this website since there are some touch problem for phones**
 
+If you need to deploy the website locally, please download the ```avsapp``` folder and use
+
+```
+mvn package
+```
+
+then
+
+```
+java -jar target 'the target jar file'
+```
+
+then check your ```localhost/simulator```, the website should now start.
+
 ## How it Work?
 
 ### Model
